@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::API
-    protect_from_forgery with: :exception
-    before_action :snake_case_params, :attach_authenticity_token
+    before_action :snake_case_params
 
     def current_user
       @current_user ||= User.find_by(session_token: session[:session_token])
@@ -39,12 +38,8 @@ class ApplicationController < ActionController::API
 
 
     private
-
+    
     def snake_case_params
       params.deep_transform_keys!(&:underscore)
-    end
-
-    def attach_authenticity_token
-      headers['X-CSRF-Token'] = masked_authenticity_token(session)
     end
 end
