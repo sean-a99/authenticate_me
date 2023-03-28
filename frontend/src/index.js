@@ -9,3 +9,19 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+const initializeApp = () => {
+  let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+  let initialState = {};
+
+  if (currentUser) {
+    initialState = {
+      users: {
+        [currentUser.id]: currentUser
+      }
+    }
+  }
+
+  const store = configureStore(initialState);
+
+}
