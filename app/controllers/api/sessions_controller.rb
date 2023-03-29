@@ -1,16 +1,31 @@
 class Api::SessionsController < ApplicationController
   def show
-    render json: { user: current_user }
+    @user = current_user
+    if @user
+      render json: { user: @user }
+    else
+      render json: { user: nil }
+    end
   end
 
   def create
-    @user = User.new(user_params)
+    credential = params[:credential]
+    password = params[:password]
+    @user = User.find_by_credentials(credential, password)
+
+    if @user
+      login!(@user)
+      render json: { user: @user }
+    else
+      render json: { errors: ['Invalid credentials']}
+    end
   end
 
   def destroy
+    logout!
+    # head :no_content
+    render json: { message: 'success' }
   end
 
-  def user_params
-    params.require(:user).permit(:username, :email, :password)
-  end
+
 end
