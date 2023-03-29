@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import configureStore from './store'
 import * as ReactDOMClient from 'react-dom/client'
+import csrfFetch, { restoreCSRF } from './store/csrf';
 
 const root = ReactDOMClient.createRoot(document.getElementById('root'))
 
@@ -12,6 +13,7 @@ const store = configureStore();
 
 if (process.env.NODE_ENV !== 'production') {
   window.store = store;
+  window.csrfFetch = csrfFetch
 }
 
 function Root() {
@@ -22,8 +24,17 @@ function Root() {
   </Provider>
 }
 
-root.render(
-  <React.StrictMode>
-    <Root />
-  </React.StrictMode>
-);
+const renderApp = () => {
+  root.render(
+    <React.StrictMode>
+      <Root />
+    </React.StrictMode>
+  );
+}
+
+if (sessionStorage.getItem('X-CSRF-Token') === null) {
+  restoreCSRF().then(renderApp);
+} else {
+  renderApp();
+}
+
