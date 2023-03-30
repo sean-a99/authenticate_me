@@ -40,7 +40,8 @@ const renderApp = () => {
 
 
 if (sessionStorage.getItem('X-CSRF-Token') === null) {
-  restoreSession().then(renderApp);
+  console.log(sessionStorage.getItem('X-CSRF-Token'))
+  store.dispatch(restoreSession()).then(renderApp);
 } else {
   renderApp();
 }
