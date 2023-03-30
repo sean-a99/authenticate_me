@@ -19,7 +19,6 @@ const LoginFormPage = () => {
         return dispatch(login({credential: username, password: password}))
             .catch(async res => {
                 const data = await res.json();
-                console.log(data)
                 setErrors(data.errors);
             })
         

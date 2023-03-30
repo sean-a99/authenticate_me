@@ -22,6 +22,7 @@ form {
 
     border: solid black;
     background-color:antiquewhite;
+    border-radius: 10%;
 }
 
 button {

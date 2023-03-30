@@ -4,9 +4,10 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import * as ReactDOMClient from 'react-dom/client'
-import csrfFetch, { restoreCSRF } from './store/csrf';
+import csrfFetch from './store/csrf';
 import configureStore from './store';
 import * as sessionActions from './store/session';
+import { restoreSession } from './store/session';
 
 
 const root = ReactDOMClient.createRoot(document.getElementById('root'))
@@ -39,7 +40,7 @@ const renderApp = () => {
 
 
 if (sessionStorage.getItem('X-CSRF-Token') === null) {
-  restoreCSRF().then(renderApp);
+  restoreSession().then(renderApp);
 } else {
   renderApp();
 }
