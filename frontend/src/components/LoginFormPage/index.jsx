@@ -24,10 +24,9 @@ const LoginFormPage = () => {
             })
         
     }
-
+    //returning a form below
     return(
         <>
-   
             <form onSubmit={handleSubmit}>
                 <ul>
                     {errors.map((error, i) => {
